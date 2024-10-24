@@ -1,4 +1,4 @@
-package com.saprone.food_recipe_generator;
+package com.saprone.food_recipe_generator.configuration;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
