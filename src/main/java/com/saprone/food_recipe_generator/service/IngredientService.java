@@ -27,8 +27,8 @@ public class IngredientService {
         try {
             IngredientList ingredientList = restTemplate.getForObject("https://www.themealdb.com/api/json/v1/1/list.php?i=list", IngredientList.class);
 
-            if (ingredientList != null && ingredientList.getMeals() != null) {
-                for (IngredientList.IngredientItem item : ingredientList.getMeals()) {
+            if (ingredientList != null && ingredientList.getIngredients() != null) {
+                for (IngredientList.IngredientItem item : ingredientList.getIngredients()) {
                     String ingredientName = item.getStrIngredient();
                     String ingredientId = item.getIdIngredient();
 

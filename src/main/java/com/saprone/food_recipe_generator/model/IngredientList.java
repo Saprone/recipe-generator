@@ -7,7 +7,7 @@ import java.util.List;
 @Setter
 @Getter
 public class IngredientList {
-    private List<IngredientItem> meals; // Change to map to the actual return type
+    private List<IngredientItem> ingredients;
 
     @Setter
     @Getter
