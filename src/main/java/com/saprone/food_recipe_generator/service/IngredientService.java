@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.List;
 
 @Service
@@ -38,22 +37,19 @@ public class IngredientService {
                         ingredient.setIngredientId(Integer.parseInt(ingredientId));
                         ingredient.setIngredientName(ingredientName);
 
-                        //System.out.println(ingredient.getIngredientId() + " | " +  ingredient.getIngredientName()+ " | " + ingredient.getClass());
-
                         ingredientRepository.save(ingredient);
                     } else {
-                        logger.warn("Received empty ingredient name, skipping.");
+                        logger.warn("Received empty ingredient name.");
                     }
                 }
             } else {
                 logger.warn("No ingredients found in response.");
             }
         } catch (Exception e) {
-            logger.error("Error fetching and saving ingredients", e);
+            logger.error("Error fetching and saving ingredients.", e);
         }
     }
 
-    // New method to get all ingredients
     public List<Ingredient> getAllIngredients() {
         return ingredientRepository.findAll();
     }

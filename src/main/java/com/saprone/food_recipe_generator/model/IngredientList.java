@@ -2,7 +2,6 @@ package com.saprone.food_recipe_generator.model;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.List;
 
 @Setter
