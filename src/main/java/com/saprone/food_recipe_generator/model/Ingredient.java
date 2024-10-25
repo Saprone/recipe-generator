@@ -1,17 +1,20 @@
 package com.saprone.food_recipe_generator.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
 @Entity
+@Getter
+@Setter
 public class Ingredient {
 
     @Id
-    private Integer ingredientId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String ingredientName;
+    private String name;
 }
