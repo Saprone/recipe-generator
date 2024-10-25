@@ -25,26 +25,33 @@ public class IngredientService {
     @PostConstruct
     public void fetchAndSaveIngredients() {
         try {
-            // Fetching the ingredients from the external API
-            String response = restTemplate.getForObject(urlIngredientsMealDB, String.class);
+            // Check if table ingredients in the database is empty
+            if (ingredientRepository.count() == 0) {
+                // Fetching the ingredients from the external API
+                String response = restTemplate.getForObject(urlIngredientsMealDB, String.class);
 
-            // Parsing the response and saving each ingredient
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(response);
-            JsonNode ingredientsNode = jsonNode.path("meals");
+                // Parsing the response and saving each ingredient
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode jsonNode = objectMapper.readTree(response);
+                JsonNode ingredientsNode = jsonNode.path("meals");
 
-            if (ingredientsNode.isArray()) {
-                for (JsonNode ingredientNode : ingredientsNode) {
-                    String ingredientName = ingredientNode.path("strIngredient").asText();
-                    if (!ingredientName.isEmpty()) {
-                        Ingredient ingredient = new Ingredient();
-                        ingredient.setName(ingredientName);
-                        ingredientRepository.save(ingredient);
+                if (ingredientsNode.isArray()) {
+                    for (JsonNode ingredientNode : ingredientsNode) {
+                        String ingredientName = ingredientNode.path("strIngredient").asText();
+
+                        if (!ingredientName.isEmpty()) {
+                            Ingredient ingredient = new Ingredient();
+                            ingredient.setName(ingredientName);
+
+                            ingredientRepository.save(ingredient);
+                        }
                     }
                 }
-            }
 
-            System.out.println("Ingredients fetched and saved successfully.");
+                System.out.println("Ingredients fetched and saved successfully.");
+            } else {
+                System.out.println("Database is not empty. Skipping fetching and saving ingredients.");
+            }
         } catch (JsonProcessingException e) {
             System.err.println("Error processing JSON response: " + e.getMessage());
         }
