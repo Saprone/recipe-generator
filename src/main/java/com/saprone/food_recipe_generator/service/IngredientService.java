@@ -1,5 +1,8 @@
 package com.saprone.food_recipe_generator.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.saprone.food_recipe_generator.model.Ingredient;
 import com.saprone.food_recipe_generator.repository.IngredientRepository;
 import jakarta.annotation.PostConstruct;
@@ -17,14 +20,33 @@ public class IngredientService {
     @Autowired
     private RestTemplate restTemplate;
 
-    @PostConstruct
-    public void fetchAndSaveIngredients() throws Exception {
-        try {
-            String urlIngredientsMealDB = "https://www.themealdb.com/api/json/v1/1/list.php?i=list";
-            System.out.println(urlIngredientsMealDB);
+    private static final String urlIngredientsMealDB = "https://www.themealdb.com/api/json/v1/1/list.php?i=list";
 
-        } catch (Exception e) {
-            throw new Exception("Error fetching and saving ingredients.", e);
+    @PostConstruct
+    public void fetchAndSaveIngredients() {
+        try {
+            // Fetching the ingredients from the external API
+            String response = restTemplate.getForObject(urlIngredientsMealDB, String.class);
+
+            // Parsing the response and saving each ingredient
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(response);
+            JsonNode ingredientsNode = jsonNode.path("meals");
+
+            if (ingredientsNode.isArray()) {
+                for (JsonNode ingredientNode : ingredientsNode) {
+                    String ingredientName = ingredientNode.path("strIngredient").asText();
+                    if (!ingredientName.isEmpty()) {
+                        Ingredient ingredient = new Ingredient();
+                        ingredient.setName(ingredientName);
+                        ingredientRepository.save(ingredient);
+                    }
+                }
+            }
+
+            System.out.println("Ingredients fetched and saved successfully.");
+        } catch (JsonProcessingException e) {
+            System.err.println("Error processing JSON response: " + e.getMessage());
         }
     }
 
