@@ -29,9 +29,9 @@ jobs:
         run: mvn test
 
       - name: Run SonarCloud analysis
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=Saprone_recipe-generator -Dsonar.organization=Saprone -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONARCLOUD_TOKEN
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn sonar:sonar -Dsonar.projectKey=Saprone_recipe-generator -Dsonar.organization=Saprone -Dsonar.sources=. -Dsonar.java.binaries=target/classes -Dsonar.host.url=https://sonarcloud.io
+          SONARCLOUD_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
