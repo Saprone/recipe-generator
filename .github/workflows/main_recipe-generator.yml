@@ -28,11 +28,17 @@ jobs:
       - name: Run unit tests with Maven
         run: mvn test
 
-      - name: Run SonarQube analysis
+      - name: Run SonarCloud analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: 'https://sonarcloud.io/'
-        run: mvn sonar:sonar -Dsonar.projectKey=Saprone_recipe-generator -Dsonar.organization=Saprone -Dsonar.sources=. -Dsonar.java.binaries=target/classes
+        run: mvn sonar:sonar \
+          -Dsonar.projectKey=Saprone_recipe-generator \
+          -Dsonar.organization=Saprone \
+          -Dsonar.sources=. \
+          -Dsonar.java.binaries=target/classes \
+          -Dsonar.projectName="Food Recipe Generator" \
+          -Dsonar.projectVersion="1.0.0"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
