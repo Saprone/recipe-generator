@@ -16,16 +16,14 @@ import java.util.List;
 @Service
 public class IngredientService {
 
-    private static final Logger logger = LoggerFactory.getLogger(IngredientService.class);
-    private final IngredientRepository ingredientRepository;
-    private final RestTemplate restTemplate;
-    private static final String URL_INGREDIENTS_MEAL_DB = "https://www.themealdb.com/api/json/v1/1/list.php?i=list";
+    @Autowired
+    private IngredientRepository ingredientRepository;
 
     @Autowired
-    public IngredientService(IngredientRepository ingredientRepository, RestTemplate restTemplate) {
-        this.ingredientRepository = ingredientRepository;
-        this.restTemplate = restTemplate;
-    }
+    private RestTemplate restTemplate;
+
+    private static final Logger logger = LoggerFactory.getLogger(IngredientService.class);
+    private static final String URL_INGREDIENTS_MEAL_DB = "https://www.themealdb.com/api/json/v1/1/list.php?i=list";
 
     @PostConstruct
     public void fetchAndSaveIngredients() {
