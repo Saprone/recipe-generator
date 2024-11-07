@@ -28,6 +28,10 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<sonar.projectKey>Saprone_recipe-generator</sonar.projectKey>
+		<sonar.organization>Saprone</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
 	</properties>
 	<dependencies>
 		<dependency>
