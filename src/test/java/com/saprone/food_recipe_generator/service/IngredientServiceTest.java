@@ -17,7 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class IngredientServiceTest {
+class IngredientServiceTest {
 
     @Mock
     private IngredientRepository ingredientRepository;
@@ -34,7 +34,7 @@ public class IngredientServiceTest {
     }
 
     @Test
-    public void testFetchAndSaveIngredients_whenDatabaseIsEmpty() {
+    void testFetchAndSaveIngredients_whenDatabaseIsEmpty() {
         // Arrange
         String jsonResponse = "{\"meals\":[{\"strIngredient\":\"Ingredient1\"},{\"strIngredient\":\"Ingredient2\"}]}";
         when(ingredientRepository.count()).thenReturn(0L); // Mock the count to return 0
@@ -48,7 +48,7 @@ public class IngredientServiceTest {
     }
 
     @Test
-    public void testFetchAndSaveIngredients_whenDatabaseIsNotEmpty() {
+    void testFetchAndSaveIngredients_whenDatabaseIsNotEmpty() {
         // Arrange
         when(ingredientRepository.count()).thenReturn(1L); // Mock the count to return more than 0
 

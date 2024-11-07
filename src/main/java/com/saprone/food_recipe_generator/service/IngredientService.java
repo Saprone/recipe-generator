@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.saprone.food_recipe_generator.model.Ingredient;
 import com.saprone.food_recipe_generator.repository.IngredientRepository;
 import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,13 +16,16 @@ import java.util.List;
 @Service
 public class IngredientService {
 
-    @Autowired
-    private IngredientRepository ingredientRepository;
+    private static final Logger logger = LoggerFactory.getLogger(IngredientService.class);
+    private final IngredientRepository ingredientRepository;
+    private final RestTemplate restTemplate;
+    private static final String URL_INGREDIENTS_MEAL_DB = "https://www.themealdb.com/api/json/v1/1/list.php?i=list";
 
     @Autowired
-    private RestTemplate restTemplate;
-
-    private static final String urlIngredientsMealDB = "https://www.themealdb.com/api/json/v1/1/list.php?i=list";
+    public IngredientService(IngredientRepository ingredientRepository, RestTemplate restTemplate) {
+        this.ingredientRepository = ingredientRepository;
+        this.restTemplate = restTemplate;
+    }
 
     @PostConstruct
     public void fetchAndSaveIngredients() {
@@ -28,7 +33,7 @@ public class IngredientService {
             // Check if table ingredients in the database is empty
             if (ingredientRepository.count() == 0) {
                 // Fetching the ingredients from the external API
-                String response = restTemplate.getForObject(urlIngredientsMealDB, String.class);
+                String response = restTemplate.getForObject(URL_INGREDIENTS_MEAL_DB, String.class);
 
                 // Parsing the response and saving each ingredient
                 ObjectMapper objectMapper = new ObjectMapper();
@@ -48,12 +53,12 @@ public class IngredientService {
                     }
                 }
 
-                System.out.println("Ingredients fetched and saved successfully.");
+                logger.info("Ingredients fetched and saved successfully.");
             } else {
-                System.out.println("Database is not empty. Skipping fetching and saving ingredients.");
+                logger.info("Database is not empty. Skipping fetching and saving ingredients.");
             }
         } catch (JsonProcessingException e) {
-            System.err.println("Error processing JSON response: " + e.getMessage());
+            logger.error("Error processing JSON response: {}", e.getMessage());
         }
     }
 

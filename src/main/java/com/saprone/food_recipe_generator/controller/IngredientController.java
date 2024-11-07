@@ -10,8 +10,12 @@ import java.util.List;
 @RestController
 public class IngredientController {
 
+    private final IngredientService ingredientService;
+
     @Autowired
-    private IngredientService ingredientService;
+    public IngredientController(IngredientService ingredientService) {
+        this.ingredientService = ingredientService;
+    }
 
     @GetMapping("/ingredients")
     public List<Ingredient> getAllIngredients() {
