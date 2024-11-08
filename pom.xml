@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.saprone</groupId>
-	<artifactId>food-recipe-generator</artifactId>
+	<artifactId>recipe-generator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>food-recipe-generator</name>
-	<description>Food Recipe Generator </description>
+	<name>recipe-generator</name>
+	<description>Recipe Generator </description>
 	<url/>
 	<licenses>
 		<license/>
