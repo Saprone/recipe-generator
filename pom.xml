@@ -8,6 +8,7 @@
 		<version>3.3.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+	<groupId>com.saprone</groupId>
 	<artifactId>recipe-generator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>recipe-generator</name>
@@ -29,6 +30,7 @@
 		<java.version>21</java.version>
 		<sonar.organization>saprone</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.projectKey>recipe-generator</sonar.projectKey>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -73,6 +75,11 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>5.0.0.4389</version> <!-- Use the latest version available -->
 			</plugin>
 		</plugins>
 	</build>
