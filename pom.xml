@@ -12,7 +12,7 @@
 	<artifactId>recipe-generator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>recipe-generator</name>
-	<description>Recipe Generator </description>
+	<description>Recipe Generator</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -28,8 +28,6 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
-		<sonar.organization>saprone</sonar.organization>
-		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
